@@ -1,0 +1,45 @@
+<mat-form-field appearance="standard">
+  <mat-label>Filter Table</mat-label>
+  <input matInput placeholder="Search" search (keyup)="applyFilter($event)" #input />
+</mat-form-field>
+
+<div>
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
+      <td mat-cell *matCellDef="let row"> {{row.time | date:'dd.MM.yy HH:mm'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="temperature">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Temperature </th>
+      <td mat-cell *matCellDef="let row" class="temperature"> {{row.temperature}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="presure">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Pressure </th>
+      <td mat-cell *matCellDef="let row"> {{row.pressure}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> code </th>
+      <td mat-cell *matCellDef="let row">{{row.code}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <!-- Show when data does not exist -->
+    <tr *matNoDataRow>
+      <td class="mat-cell" colspan="4"> The Filter does not match any item in the data for this text "{{input.value}}"!
+      </td>
+    </tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5,10,25,100]" aria-labels="select page of data">
+
+  </mat-paginator>
+</div>
+
+<app-line-chart></app-line-chart>
